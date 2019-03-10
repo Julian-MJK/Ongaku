@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> 〠 </title>
+    <link rel="icon" href="https://cdn2.iconfinder.com/data/icons/interface-part-1/32/html-code-512.png">
+    <link rel="stylesheet" href="flexing.css">
+    <script src="superb.js"></script>
+
+
+    <style>
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="plainDiv">
+        <div class="secondaryVariant justifyCenter minMarginChildren" style="width:400px; margin: 0;"> <h1> 音楽 </h1></div>
+    </div>
+</header>
+<div class="plainDiv noMargin noPadding alignCenter justifyCenter column">
+
+
+    <div id="chromeWarningDiv" class="error vanish" style="width: 500px">
+        <p id="chromeWarning">It seems you're using Google Chrome, because of this, you must click anywhere on the page before attempting to play music, due to <a href="https://goo.gl/xX8pDD">Google Chrome's new autoplay-policy</a> </p>
+    </div>
+
+    <div class="space"></div>
+
+    <div class="secondary">
+    <h3 class="textAlignCenter noMargin">〠 Hover over an album to listen to it, click it to enable permanent player, press F to enter fullscreen. 〠</h3>
+    </div>
+
+    <div class="space"></div>
+
+
+    <marquee behavior="scroll" direction="left"  class="bold invisible noMargin blackOutline" style="position:initial; color: white; width: 600px; display:relative; font-size: 24px;" id="songInfo">  you shouldn't be seeing this  </marquee>
+
+    <div id="imgDiv" class="column noShadowChildren inline cursor_music centerOfGP_grandparent pop">
+        <div class="row plainDiv minMarginChildren noMargin noPadding">
+            <img id="Tatsuro Yamashita - Sparkle" src="Resources/img/For%20You.jpg" style="width: 200px;" class="deCirclify">
+            <img id="Haruomi Hosono - Sports Men" src="Resources/img/philHarmony.jpg" style="width: 200px;" class="deCirclify">
+            <img id="Yasuha - Flyday Chinatown" src="Resources/img/Flyday%20Chinatown.jpg" style="width: 200px;" class="deCirclify">
+        </div>
+        <div class="row plainDiv minMarginChildren noMargin noPadding">
+            <img id="Kikuchi Momoko - Mystical Composer" src="Resources/img/Mystical%20Composer.jpg" style="width: 200px;" class="deCirclify">
+            <img id="Tatsuro Yamashita - Ride On Time" src="Resources/img/Ride%20On%20Time%20Single.jpg" style="width: 200px;" class="deCirclify">
+            <img id="Tatsuro Yamashita - Magic Ways" src="Resources/img/Big%20Wave.jpg" style="width: 200px;" class="deCirclify">
+        </div>
+        <div class="row plainDiv minMarginChildren noMargin noPadding">
+            <img id="Meiko Nakahara - Dance in the memories" src="Resources/img/Mint.jpg" style="width: 200px;" class="deCirclify">
+            <img id="Mariya Takeuchi - Plastic Love" src="Resources/img/Sweetest%20Music.jpg" style="width: 200px;" class="deCirclify">
+            <img id="Junko Yagami - Tasogare no Bay City (Twilight's Bay City)" src="Resources/img/Bay%20City.jpg" style="width: 200px;" class="deCirclify">
+        </div>
+    </div>
+
+    <div class="space"></div>
+
+         <div class="row noPadding secondary">
+             <button class="minimalistButton noSideMargin" onclick="pauseAudio()">pause audio</button>
+             <button class="minimalistButton noSideMargin noSidePadding vanish" id="skipButton" onclick="shuffleNewSong()">skip</button>
+             <button class="minimalistButton noSideMargin" onclick="fastForward(30)">fast forward</button>
+         </div>
+
+    <button class="fancyButton noMargin" id="shuffleButton" onclick="startShuffle()">enable shuffle play</button>
+
+    <button class="fancyButton" id="fullscreenButton" onclick="fullscreen(currentSong)">fullscreen</button>
+
+
+    <div class="space"></div>
+
+
+
+<!-- todo: Make an array of objects with song & artist information, & generate 3x3 grids of albums out of a random selection of this array. -->
+<!-- try embedding last.fm artist information -->
+
+
+
+
+</div>
+<script>
+
+    if(isChrome===true){
+        document.getElementById("chromeWarningDiv").classList.remove("vanish");
+        console.log("Google Chrome detected");
+    } // Google Chrome kan ikke spille unmuted lyd/video med mindre bruker har interactet med siden først, for å hindre at nettsider autoplayer media. (https://goo.gl/xX8pDD). Alternativt kan jeg tvinge interaction gjennom f.eks. login-screen, med det vil være encumbering for brukeren.
+    //Removes error message after first click
+    document.onclick = function(){ document.getElementById("chromeWarningDiv").classList.add("vanish"); } ;
+
+
+
+    var imgDivEl = document.getElementById("imgDiv");
+    imagesArray = imgDivEl.querySelectorAll("img"); //lager ett array med alle elementene "<img>" i "imgDiv".
+    imagesArray.forEach(addEventListeners); //kjører funksjonen "addEventListeners" på hver imagesArray element. Raskere enn å bruke for loop.
+    function addEventListeners(value, index, arr){ //value = elementet, in this case.
+        value.addEventListener("mouseover", function(){ playSong(value.id); /*console.log("++mouseover");*/} );
+        value.addEventListener("mouseout", function(){ stopSong(); /*console.log("--mouseout");*/} );
+        value.addEventListener("click", function(){ clicked(value.id) });
+        //value.addEventListener("ondblclick", function(){ doubleClicked(value.id) });
+        //legger funksjonene i en "function(){<funksjonen min>}" wrapper for å ikke triggere den når siden lastes, med parameter.
+    }
+
+    var songInfoEl = document.getElementById("songInfo");
+    var currentSong = "";
+
+
+
+    /* __________ < HOVERING AN ALBUM > __________ */
+    function playSong(imgId){
+        if (inFocus===false){       //won't play music if focus is enabled
+            stopAudio();
+            playAudioEz(imgId + ".ogg");
+            currentSong = imgId;
+
+            songInfoEl.innerHTML = imgId;
+            songInfoEl.classList.remove("invisible");      //done so that a new line isn't added on the page when the marquee's innerHTML is initially defined, as with this, it's already defined, only transparent. Kan bruke zero-width characters, som &#8203;, men dette er mer readable.
+        }
+    }
+    function stopSong(){
+        if (inFocus===false){       //won't stop music if focus is enabled
+            stopAudio();
+            currentSong = "";
+
+            songInfoEl.classList.add("invisible");
+        }
+    }
+
+
+
+    /* __________ < CLICKING AN ALBUM > __________ */
+    var inFocus = false;
+    var previousFocusEl = document.createElement("meta"); //dummy element, previousFocusEl cannot be undefined
+
+    function clicked(songName) {
+        console.log(""); console.log("___CLICKED___"); //console.log(": inFocus="+inFocus+"  previousFocusEl="+previousFocusEl);
+        let albumImgEl = document.getElementById(songName); //ID'en er songName
+
+        if ( albumImgEl !== previousFocusEl ) {
+            albumImgEl.classList.remove("deCirclify");                //fjerner deCirclify fra clicked elementet om det er et nytt element.
+            previousFocusEl.classList.add("deCirclify");             //legger deCirclify tilbake på elementet som ble clicked forrige gang, om det er ett
+            previousFocusEl = albumImgEl;                           //Preserves previously clicked album.
+
+            if (inFocus === true){
+                stopAudio();
+                playAudioEz(songName + ".ogg");
+                currentSong = songName;
+                console.log("♪ Now Playing "+songName);
+            }
+            songInfoEl.innerHTML = songName;
+            songInfoEl.classList.remove("invisible");
+
+
+            currentlyPlayingAudio.onended = function() {        //When the song ends, turns the album back into a circle & removes marquee:
+                console.log("♪ ended.");
+                currentSong = "";
+                songInfoEl.classList.add("invisible");
+                previousFocusEl.classList.add("deCirclify");
+                previousFocusEl = document.querySelector("meta");     //dummy element
+                inFocus = false;
+                if(isFullscreen===true) fullscreen(songName);
+                if(isShuffle===true) shuffleNewSong();
+            };
+            inFocus = true;
+        } else if (albumImgEl === previousFocusEl) {
+            inFocus = false;
+            previousFocusEl.classList.add("deCirclify"); //legger deCirclify tilbake på elementet som ble clicked forrige gang.
+            previousFocusEl = document.querySelector("meta"); //dummy element
+
+            stopSong();
+            if(isFullscreen===true) fullscreen(songName);
+        }
+        console.log(": inFocus = "+inFocus);
+    }
+
+
+    /* __________ < FULLSCREEN > __________ */
+    echoKeys=false;
+    function keyPressedFunction(key){
+        if (key==="f"){
+            fullscreen(currentSong);
+        }
+    }
+
+    var isFullscreen = false;
+    function fullscreen(imgId) {
+        var albumEl = document.getElementById(imgId);
+        albumEl.style.transitionDuration = "0.5s";
+
+        if (isFullscreen === false) {
+            if (inFocus === false) clicked(imgId);
+
+            isFullscreen = true;
+            albumEl.classList.add("inflate");
+            albumEl.classList.add("centerOfGP_grandchild");
+            albumEl.parentElement.classList.add("centerOfGP_parent");
+
+            document.getElementById("fullscreenButton").classList.add("fancyButtonSecondary");
+            document.getElementById("fullscreenButton").classList.remove("fancyButton");
+
+        } else if (isFullscreen === true) {
+            //if (inFocus === true) clicked(imgId); //if enabled, stops playback and sets inFocus to false on fullscreen exit
+
+            isFullscreen = false;
+            albumEl.classList.remove("inflate");
+            albumEl.classList.remove("centerOfGP_grandchild");
+            albumEl.parentElement.classList.remove("centerOfGP_parent");
+
+            document.getElementById("fullscreenButton").classList.remove("fancyButtonSecondary");
+            document.getElementById("fullscreenButton").classList.add("fancyButton");
+        }
+        console.log(": isFullscreen = "+isFullscreen+"      inFocus = "+inFocus);
+    }
+
+
+
+    /* __________ < SHUFFLE PLAY > __________ */
+
+    var songs = ["Tatsuro Yamashita - Sparkle",
+        "Haruomi Hosono - Sports Men",
+        "Yasuha - Flyday Chinatown",
+        "Kikuchi Momoko - Mystical Composer",
+        "Tatsuro Yamashita - Ride On Time",
+        "Tatsuro Yamashita - Magic Ways",
+        "Meiko Nakahara - Dance in the memories",
+        "Mariya Takeuchi - Plastic Love",
+        "Junko Yagami - Tasogare no Bay City (Twilight's Bay City)"
+    ];
+    var newSong = "";
+    var prevSongs = ["","","","","","","","",""];
+    var songsPlayed = 0; //how many times a new song has been played, used for resetting the prevSongs pool, to not create a repeating pattern of songs.
+    var isShuffle = false;
+
+    function generateSong(){ return songs[Math.floor(Math.random()*9)]; }
+
+    function storePrevSongs(newSong) {       //stores previous & current songs, to prevent playing the same song again in a short amount of time.
+        prevSongs[0] = newSong;
+        for (let i = prevSongs.length - 1; i > 0; i--) {
+            prevSongs[i] = prevSongs[i - 1];
+        }
+        console.log("[prevSongs] ("+songsPlayed+") = " + prevSongs);
+
+        if(songsPlayed >= 9){
+            prevSongs = [newSong,"","","","","","","",""];
+            songsPlayed = 1; //1, not 0, as if it was 0, then the same song may play twice when prevSongs was reset.
+        } else songsPlayed++
+    }
+
+
+    function startShuffle(){
+        if(isShuffle===false){
+            isShuffle = true;
+
+            if(isAudioPlaying()===false){
+                inFocus = true;
+                storePrevSongs(newSong);
+                newSong = generateSong();
+                clicked(newSong);
+            }
+            document.getElementById("skipButton").classList.remove("vanish");
+            document.getElementById("shuffleButton").innerHTML="disable shuffle play";
+            document.getElementById("shuffleButton").classList.add("fancyButtonSecondary");
+            document.getElementById("shuffleButton").classList.remove("fancyButton");
+        }else if(isShuffle===true){
+            isShuffle = false;
+            document.getElementById("skipButton").classList.add("vanish");
+            document.getElementById("shuffleButton").innerHTML="enable shuffle play";
+            document.getElementById("shuffleButton").classList.remove("fancyButtonSecondary");
+            document.getElementById("shuffleButton").classList.add("fancyButton");
+
+
+        }
+    }
+
+    echoAudio = true; //deleteme
+
+    function shuffleNewSong(){
+        storePrevSongs(currentSong);
+
+        if(isShuffle===true){
+            newSong = generateSong();
+            while(prevSongs.includes(newSong)===true){
+                newSong = generateSong();
+            }
+            inFocus = true;
+            clicked(newSong);
+            if(isFullscreen){ fullscreen(prevSongs[0]); fullscreen(newSong); }
+
+            console.log(": "+prevSongs[0]+"   ->   "+newSong);
+        }
+        //coolDown("skipButton", 0.7);
+    }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

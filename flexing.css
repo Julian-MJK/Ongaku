@@ -1,0 +1,575 @@
+/* _________________ variables _________________ */
+/* for å sette en variabel, skriv --<variabelnavn>: <verdi> */
+:root {
+    --primary: #4FAEAD;
+    --primaryVariant: #60CDA3;
+    --secondary: #F0C04C;
+    --secondaryVariant: #F58538;
+    --background: #4880B6;
+    --surface: #f5f1ed;
+    --error: #c53426;
+    /* Fargen til elementer som ligger "på" gitt annet element */
+    --onPrimary: #f5f1ed;
+    --onSecondary: #252323;
+    --onBackground: #252323;
+    --onSurface: #252323;
+    --onError: #f5f1ed;
+    
+    /* alternatives:
+    Strong Blue - 6200EE 3700B3 03DAC6 018786 f5f1ed f5f1ed B00020 f5f1ed 252323 252323 252323 f5f1ed
+    PinkProwess - e91e63 b0003a f06292 ff94c2
+    Vintage - 252323 70798c f5f1ed dad2bc a99985
+    Professional Blue - 4880B6 5996A7 A9C77C EBF6CC 38A5B1
+    Joyous Blue - 4880B6 31A7B1 C2AD53 CF8E5A D84B40
+    Envy - 4FAEAD 60CDA3 F58538 B54F52 4880B6
+    Disgust - 60CDA3 C3AF5B F58538 B54F52 4880B6
+    ★ Tacky Jappie - 4FAEAD 60CDA3 F0C04C F58538 4880B6
+    */
+
+    /* alt background color e2e1e0*/
+
+    --borderRadius: 25px;
+    --shadowColor: rgba(0,0,0,.25); /* alternatives: rgba(0,0,0,.5) [fargen tar på fargen til bakgrunnen pga. opacity, beste alternativ] - #ccc - grey */
+    --shadowColorSides: rgba(0,0,0,.25);
+
+
+
+    /* for å lettere kunne forandre ting: (for øyeblikket ubrukt men beholder det her om jeg trenger det)
+    --divColor: var(--primary)
+    --inputColor: var(--secondary)
+    --detailColor: var(--secondaryVariant) */
+    
+} /* for å calle (bruke) variabeler, bruk var(--<variabelNavn>) som verdi */
+
+/* _________________  /  _________________ */
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+
+    scrollbar-width: none; /* for firefox */
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+} ::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,.25);
+    border-radius: 15px;
+} ::-webkit-scrollbar-thumb:hover { background-color: rgba(0,0,0,.40); }
+
+
+body {
+
+    font-family: "arial", "callibri", sans-serif; /* Første font er foretrukket, følgende fonter er fallbacks, om nettleseren ikke støtter fonten. */
+    /* Good alternatives: "Century Gothic" / "Adobe Garamond"(Custom font, trendy, ofte brukt i  magasiner) / "Verdana" (Bra readability: Noen studier hevder det er den lettest-leste fonten) */
+    
+    
+    background-color: var(--background); */
+    /*background-image: url("Resources/loops/space\ nebula.jpg");
+    background-repeat: repeat; */
+
+
+    height: auto; /* Gjør at <body> fyller hele siden, siden Firefox ikke gjør det automatisk */
+    width: 100vw; 
+    margin: 0;
+
+
+    flex-wrap: wrap; /* Wrapper elementer ned til ny linje om det blir overflow */
+    overflow: auto;
+
+
+    cursor: url("Resources/etc/cursors/Numix_Cursors/NumixLight/Arrow.cur"), auto;
+}
+
+* {
+    max-width: 100%;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
+
+header { /* for å centere items, ha contens i en div i header. Alt er !important for å override evt. div. */
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 10px;
+} header>h1, header>h2, header>h3 {
+      color: var(--onPrimary);
+      margin: 10px auto; /*top&bunn=10px, left&right=auto*/
+      font-weight: bold;
+  }  header img {
+        max-height:100% !important; /* for å ikke exceede parent element */
+      }
+
+
+div {
+    display: flex;/* used to be !important *//* Om ikke-ekspanderende divs er ønsket, replace display med "inline-flex", og margin til en konstant. Vil disable innate centering. */
+    align-items: center;
+    flex-wrap: wrap;
+
+
+    margin: 10px;
+    padding: 10px;
+
+    background-color: var(--primary);
+    border-color: var(--onBackground);
+    border-radius: var(--borderRadius);
+    border-width: 0;
+    border-style: solid;
+
+
+    box-shadow: 0 /*X*/ 3px /*Y*/ 6px /*uklarhet*/ 0 /*spredning (optional)*/ var(--shadowColor);
+    -webkit-box-shadow: 0  3px 6px  0 var(--shadowColor);
+}
+
+div p, div h1, div h2, div h3, div h4, div h5 {
+    color: var(--onPrimary);
+    cursor: cursor; /*url("Resources/etc/cursors/Mario_Gant/Text_Select.cur"), text*/
+}
+.plainDiv>p, .plainDiv>h1, .plainDiv>h2, .plainDiv>h3, .plainDiv>h4, .plainDiv>h5 {
+    color: var(--onBackground) !important;
+}
+
+
+h1, h2, h3, h4, h5 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+p {
+    /* for automatisk linebreak: width: 100% */
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+div a{
+    color:var(--secondary);
+}
+.plainDiv a{
+    color:var(--primary) !important;
+}
+.error a{
+    color:var(--primaryVariant) !Important;
+}
+
+img {
+    border-style:solid;
+    border-color:black;
+    border-radius: var(--borderRadius); 
+    border-width: 1px;
+    
+    max-width: 100%; /* Bilder vil aldri bli større enn parent element */
+    max-height: 100%;
+    
+    margin:5px;
+    
+    /* sikrer at aspect ratio ikke forandres */
+    display: block;
+}
+
+input, select, button, textarea {
+    background-color: var(--secondary);
+    margin: 5px;
+    padding: 5px;
+    text-align: center;    
+    border-style: solid;
+    border-color: var(--onBackground);
+    border-width: 1px;
+    border-radius: var(--borderRadius);
+    /* max-width: 90%;  */
+}
+
+button {
+    font-size: 14px;
+    font-weight: 200;
+    border-radius: var(--borderRadius) /*25px*/ !important;
+    padding: 7px 15px; /* "!important" fordi "input, select, button, textarea" vil override uten */
+
+}
+
+button, select{
+    cursor: url("Resources/etc/cursors/Mario_Gant/Normal_Select.cur"), pointer !important;
+}
+
+input, textArea{
+    cursor: url("Resources/etc/cursors/0etc/Zelda_Pen.png"), text;
+}
+
+/* Gjemmer opp & ned pilene på input type "number" */
+/* For Chrome & etc. */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; margin: 0; }
+    /* For Firefox: */
+input[type="number"] { -moz-appearance: textfield; }
+
+
+::placeholder { /*placeholder teksten i inputs*/
+    padding-left: 3px;
+    color: var(--onSecondary);
+    opacity: .6;
+}
+
+marquee {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/*_________________ flex _________________*/
+.inline { display: inline-flex !important;  } /*fits container to content size*/
+
+.row { flex-direction: row; } /* .alignCenter senterer vertikalt (?) */
+.column { flex-direction: column; } /* .alignCenter senterer horisontalt (?) */
+
+.disableCenteringY { align-items: flex-start; /*middle/top/bottom*/ }
+.disableCenteringX { justify-content: left; }
+
+.alignCenter  { align-items: center; }  /*centers children vertically*/
+.alignLeft { align-items: flex-start; } 
+.alignRight { align-items: flex-end; }
+.justifyAround { justify-content: space-around; }
+.justifyCenter { justify-content: center; }     /*centers children horizontally*/
+.justifyLeft { justify-content: left; /* center/left/right */ }
+.justifyRight { justify-content: right; }
+
+/* for readability */
+.centerVertically { align-items: center; }
+.centerHorizontally { justify-content: center; }
+
+.dontShrink { flex-shrink: 0; }
+.grow1 { flex-grow: 1; } /* elementet utvider seg til å fylle parent element, tallet er "prioriteten" */
+.grow2 { flex-grow: 2; } 
+.grow3 { flex-grow: 3; } 
+.grow4 { flex-grow: 4; }
+.stretch{ flex-grow: 1; align-items: stretch; }
+
+.wrap { flex-wrap: wrap; }
+
+
+
+
+
+/*_________________ general _________________*/
+.newline{ margin: 0px !important; padding: 0px !important; display: relative; width: 95%; height: 0; background-color: transparent !important; border-style: none; !important; box-shadow: none !important; }   /* <br> fungerer ikke med FLEX, dette er et alternativ. */
+.space{ margin: 0px !important; padding: 0px !important; display: relative; width: 95%; height: 25px; background-color: transparent !important; border-style: none; !important; box-shadow: none !important; }
+
+.noHover{ pointer-events: none; }
+
+.minMargin { margin: 2px !important;}
+.noMargin { margin: 0 !important;}
+.noSideMargin {margin-left: 0 !important; margin-right: 0 !important;}
+.noMarginChildren *{ margin: 0 !important;}
+.minMarginChildren *{ margin: 2px !important;}
+.noPadding { padding: 0 !important;}
+.noSidePadding { padding-left: 0 !important; padding-right: 0 !important;}
+
+.expandOnHoverChild{ display:none; }
+.expandOnHoverParent:hover .expandOnHoverChild{ display:block; }
+
+.bold { font-weight: bold; } 
+.italic { font-style:italic; }
+
+/* For å posisjonere tekst over bilder i samme container. */
+.bottomLeftText{ position:absolute; bottom:8px; left:16px; }
+.bottomText{ position: absolute; bottom: 8px; }
+.topText{ position: absolute; top: 8px; }
+.topLeftText { position:absolute; top:8px; left:16px; }
+.topRightText { position:absolute; top:8px; right:16px; }
+.bottomRightText { position:absolute; bottom: 8px; right: 16px; }
+.centerTextAbsolute { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); }
+
+.textAlignCenter{text-align: center;}
+.textAlignLeft{text-align: start;}
+.textAlignRight{text-align: right;}
+.textAlignJustify{text-align: justify;}
+.alignSelfCenter {  align-self: center; }
+
+.invisible { opacity: 0 !important; }
+.vanish { display: none !important; }
+
+.shadow {
+    box-shadow:         3px 3px 5px var(--shadowColor) !important;  /* Kompatibel med det meste */
+    -webkit-box-shadow: 3px 3px 5px var(--shadowColor) !important;  /* Kompatibel med android og eldre versjoner av nettlesere */
+}
+
+.raised, .heavyShadow{ box-shadow: 0 15px 30px var(--shadowColor), 0 15px 30px var(--shadowColor); }
+
+/* Children av parent element med noShadow class vil ikke ha shadow. */
+.noShadow{
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.noShadowChildren *{
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.whiteOutline { -webkit-text-stroke-color: white; -webkit-text-stroke-width: 1px; }
+.blackOutline { -webkit-text-stroke-color: black; -webkit-text-stroke-width: 1px; }
+
+
+.transparent{
+    opacity: .785; /* Kan overrides individually ved å bruke style="opacity:1;" i div taggen. Childs inheriter parents opacity. */
+    transition-duration: .25s;
+} .transparent:hover { opacity: 1; }
+/* alternaivt bruk rgb for å velge bakgrunnsfarge som er opaque, og derfor tar på seg bakgrunnen sin farge */
+
+
+/* __________ < CURSORS > __________ */
+.cursor_fancy { cursor: url("Resources/etc/cursors/Numix_Cursors/NumixLight/Arrow.cur"), auto; }
+.cursor_rubbishBionicle { cursor: url("Resources/etc/cursors/Bionicle/Normal\ Select.cur"), auto; }
+.cursor_mario { cursor: url("Resources/etc/cursors/Mario_Gant/Normal\ Select.cur"), auto; }
+.cursor_music { cursor: url("Resources/etc/cursors/0etc/music bigboi.cur"), auto; }
+.cursor_music_children * { cursor: url("Resources/etc/cursors/0etc/music bigboi.cur"), auto; }
+.cursor_precision {  }
+.cursor_hand { cursor: url("Resources/etc/cursors/Mario_Gant/Normal Select.cur"), hand; }
+
+/* __________ < COLOURS > __________ */
+.primary { background-color: var(--primary) !important; color: var(--onPrimary)}
+.primaryVariant { background-color: var(--primaryVariant) !important; color: var(--onPrimary)}
+.secondary { background-color: var(--secondary) !important; color: var(--onSecondary)}
+.secondaryVariant { background-color: var(--secondaryVariant) !important; color: var(--onSecondary);}
+
+.primary>p, .primary>h1, .primary>h2, .primary>h3, .primary>h4, .primary>h5{ color: var(--onprimary) !important; }
+.primaryVariant>p, .primaryVariant>h1, .primaryVariant>h2, .primaryVariant>h3, .primaryVariant>h4, .primaryVariant>h5{ color: var(--onprimary) !important; }
+.secondary>p, .secondary>h1, .secondary>h2, .secondary>h3, .secondary>h4, .secondary>h5{ color: var(--onSecondary) !important; }
+.secondaryVariant>p, .secondaryVariant>h1, .secondaryVariant>h2, .secondaryVariant>h3, .secondaryVariant>h4, .secondaryVariant>h5{ color: var(--onSecondary) !important; }
+/* __________ < end > __________ */
+
+.disabled {
+    color: darkgrey !important;
+}
+
+
+
+
+
+
+/*_________________ specialized _________________*/
+.fancyDiv{
+    background-color: var(--primary);
+
+    max-width: 75%; /* ca. det gyldne snitt. note at når en setter width til en prosent så justerer den seg bedre til alle skjermstørrelser */
+    overflow: auto; /* i tilfelle jeg på magisk vis klarer å gjøre noe stort nok til å trenge en scroll-bar */
+
+    margin: 15px auto;
+
+    padding: 15px;
+    border-style: solid; 
+    border-color: var(--onBackground); 
+    border-radius: var(--borderRadius);
+    border: 1px; 
+}
+
+
+.plainDiv { /* unformatted div */
+    background-color: transparent !important;
+    border-style: none; border-radius: 0; border-width: 0 !important;
+    box-shadow: none !important;
+}
+.plainDiv > p, .plainDiv > h1 {
+    color: var(--onBackground);
+}
+
+.error {
+    background-color: var(--error);
+}
+.error p, .error h1, .error h2, .error h3, .error h4, .error h5{
+    color: var(--onError);
+}
+
+.minimalistButton{
+    color: var(--onSecondary);
+    background-color: transparent;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: var(--borderRadius);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 5px; padding: 15px 30px;
+    transition-duration: .3s;
+}.minimalistButton:hover{
+     color: var(--onPrimary);
+ }
+
+
+
+.fancyButton {
+    color: var(--onBackground);
+     /*background-color: var(--background);*/
+    background: transparent;
+    border: 2px solid var(--primary);
+    border-radius: var(--borderRadius);
+
+    text-transform: uppercase;
+    font-weight: bold;
+    transition-duration: .5s;
+
+    margin: 5px;
+    padding: 15px 30px !important;
+}  .fancyButton:hover {
+      background-color: var(--primary);
+      color: var(--onPrimary);
+      border-color: transparent /* alt: var(--primaryVariant) */
+}
+.fancyButtonBackground {
+    color: var(--onPrimary);
+    /*background-color: var(--background);*/
+    background: transparent;
+    border: 2px solid var(--background);
+    border-radius: var(--borderRadius);
+
+    text-transform: uppercase;
+    font-weight: bold;
+    transition-duration: .5s;
+
+    margin: 5px;
+    padding: 15px 30px !important;
+}  .fancyButtonBackground:hover {
+    background-color: var(--background);
+    border-color: transparent;
+    color: var(--onBackground);
+}
+.fancyButtonSecondary {
+    color: var(--onSecondary);
+    /*background-color: var(--background);*/
+    background: transparent;
+    border: 2px solid var(--secondaryVariant);
+    border-radius: var(--borderRadius);
+
+    text-transform: uppercase;
+    font-weight: bold;
+    transition-duration: .5s;
+
+    margin: 5px;
+    padding: 15px 30px !important;
+}  .fancyButtonSecondary:hover {
+       background-color: var(--secondaryVariant);
+       border-color: transparent;
+       color: var(--onBackground);
+   }
+
+.thiccButton {
+    color: var(--surface);
+    font-size: 14px;
+    font-weight: bold;
+    background-color: var(--onSurface);
+    border-radius: var(--borderRadius);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--onBackground);
+    padding-left: 10px; padding-right: 10px;
+    padding-top: 3px; padding-bottom: 3px;
+}
+
+.imageButton {
+    font-size: 16px;
+    font-weight: bold;
+    background-image: url("Resources/loops/water/water pool.jpg");
+    border-radius: var(--borderRadius); /*30px*/
+    padding-left:15px; padding-right:15px; 
+    padding-top:5px; padding-bottom:5px;
+    
+    /*-webkit-text-stroke: 1px;     -webkit-text-stroke-color: rgba(255, 255, 255, .35);     /* Hvit outline rundt tekst for å øke lesbarhet, disabled fordi det ikke fungerte bra på så lav font-størrelse. beholder det for reference */
+    text-shadow: rgba(255, 255, 255, .75) .8px .8px; /* legger til en litt opaque hvit skygge bak teksten for å øke lesbarhet. */ /*TODO - forandre til svart & apply til annen tekst */
+}
+
+/* Moves "centerOfGP_grandchild" (with a parent "centerOfGP_parent") to the absolute center of "centerOfGP_grandparent" */
+.centerOfGP_grandparent {
+    position: relative;
+    align-items: center;
+    transform: rotate(0deg);
+}
+.centerOfGP_parent {
+    justify-content: center;
+    align-items: center;
+}
+.centerOfGP_grandchild {
+    position: fixed;
+    top: 34%;
+    transition: all 0.5s;
+}
+/*   /   */
+
+
+
+/*_________________ animations _________________*/
+.circlify{ transition-duration: .5s; }
+.circlify:hover{ border-radius:50% }
+
+.circlifyChildren, .circlifyChildren *{ transition-duration: .5s; }
+.circlifyChildren:hover, .circlifyChildren:hover *{ border-radius:50%; }
+
+.deCirclify{ 
+    transition-duration: .5s;
+    border-radius: 50%
+}.deCirclify:hover{
+    border-radius: var(--borderRadius);
+}
+
+.pop {
+    box-shadow: 0 3px 6px rgba(0,0,0,.12), 0 3px 6px var(--shadowColor);
+    transition: all .2s  ease-out;
+}.pop:hover {
+     box-shadow: 0 15px 25px var(--shadowColor), 0 10px 10px var(--shadowColor);
+ }
+
+
+.oldfilley { /*Byttes ut med transformation doo-dadd nedenfor */
+    transition-duration: 1s;
+
+    position: static; /* dun work, vil at den skal overlappe det andre */
+
+    width:637px !important;
+    height: 638.35px !important;
+    left: 0px;
+    top: 0px;
+    /* note: må kunne triggeres likt på alle album bildene */
+}
+
+.enlarge {
+    transition: all 2s ease-in-out;
+    position: relative;
+}.enlarge:hover{
+     width: 600px !important;
+     height: 300px !important;
+ }
+
+
+
+
+/*_________________ transformations _________________*/
+
+.inflate {
+    transition: all, 0.5s;
+    transform: scale(3.22, 3.22);
+    border-radius: 3px !important;
+    border-width: 0;
+} /* kan brukes med å gi parent-element class "textAlignCenter", for å centere elementer. */
+
+.stretch {
+    transition-duration: 1s;
+    transform: scale(1.5,1)
+}
+
+.widen:hover{
+     transition-duration:1s;
+     transform: scale(2, 1);
+ }
+
+
+
+
+
+/*_________________ fonts _________________*/
+@font-face {
+    /* Skaper en custom font, Garamond. Garamond er en pupulær konkurrent til Times New Roman, basert på Claude Garamond (ca. 1480-1561) sitt design. Mer info om Claude Garamond: bit.ly/2E0YHwb & om Garamond sammenlignet med Times: bit.ly/2TFe56I */
+    font-family: "Adobe Garamond";
+    src: url("resources/etc/fonts/Garamond/Garamond_Regular.ttf");
+}
