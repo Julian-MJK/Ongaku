@@ -161,14 +161,16 @@ div a{
 img {
     border-style:solid;
     border-color:black;
-    border-radius: var(--borderRadius); 
+    border-radius: var(--borderRadius);
     border-width: 1px;
-    
+
     max-width: 100%; /* Bilder vil aldri bli større enn parent element */
     max-height: 100%;
-    
+
     margin:5px;
-    
+
+    transition-duration: .5s;
+
     /* sikrer at aspect ratio ikke forandres */
     display: block;
 }
@@ -177,7 +179,7 @@ input, select, button, textarea {
     background-color: var(--secondary);
     margin: 5px;
     padding: 5px;
-    text-align: center;    
+    text-align: center;
     border-style: solid;
     border-color: var(--onBackground);
     border-width: 1px;
@@ -232,7 +234,7 @@ marquee {
 .disableCenteringX { justify-content: left; }
 
 .alignCenter  { align-items: center; }  /*centers children vertically*/
-.alignLeft { align-items: flex-start; } 
+.alignLeft { align-items: flex-start; }
 .alignRight { align-items: flex-end; }
 .justifyAround { justify-content: space-around; }
 .justifyCenter { justify-content: center; }     /*centers children horizontally*/
@@ -245,8 +247,8 @@ marquee {
 
 .dontShrink { flex-shrink: 0; }
 .grow1 { flex-grow: 1; } /* elementet utvider seg til å fylle parent element, tallet er "prioriteten" */
-.grow2 { flex-grow: 2; } 
-.grow3 { flex-grow: 3; } 
+.grow2 { flex-grow: 2; }
+.grow3 { flex-grow: 3; }
 .grow4 { flex-grow: 4; }
 .stretch{ flex-grow: 1; align-items: stretch; }
 
@@ -273,7 +275,7 @@ marquee {
 .expandOnHoverChild{ display:none; }
 .expandOnHoverParent:hover .expandOnHoverChild{ display:block; }
 
-.bold { font-weight: bold; } 
+.bold { font-weight: bold; }
 .italic { font-style:italic; }
 
 /* For å posisjonere tekst over bilder i samme container. */
@@ -361,10 +363,10 @@ marquee {
     margin: 15px auto;
 
     padding: 15px;
-    border-style: solid; 
-    border-color: var(--onBackground); 
+    border-style: solid;
+    border-color: var(--onBackground);
     border-radius: var(--borderRadius);
-    border: 1px; 
+    border: 1px;
 }
 
 
@@ -473,9 +475,9 @@ marquee {
     font-weight: bold;
     background-image: url("Resources/loops/water/water pool.jpg");
     border-radius: var(--borderRadius); /*30px*/
-    padding-left:15px; padding-right:15px; 
+    padding-left:15px; padding-right:15px;
     padding-top:5px; padding-bottom:5px;
-    
+
     /*-webkit-text-stroke: 1px;     -webkit-text-stroke-color: rgba(255, 255, 255, .35);     /* Hvit outline rundt tekst for å øke lesbarhet, disabled fordi det ikke fungerte bra på så lav font-størrelse. beholder det for reference */
     text-shadow: rgba(255, 255, 255, .75) .8px .8px; /* legger til en litt opaque hvit skygge bak teksten for å øke lesbarhet. */ /*TODO - forandre til svart & apply til annen tekst */
 }
@@ -506,7 +508,7 @@ marquee {
 .circlifyChildren, .circlifyChildren *{ transition-duration: .5s; }
 .circlifyChildren:hover, .circlifyChildren:hover *{ border-radius:50%; }
 
-.deCirclify{ 
+.deCirclify{
     transition-duration: .5s;
     border-radius: 50%
 }.deCirclify:hover{
